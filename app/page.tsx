@@ -102,6 +102,7 @@ export default function DopeTechEcommerce() {
 
   
   const [showBackToCategories, setShowBackToCategories] = useState(false)
+  const [showJumpButton, setShowJumpButton] = useState(false)
   const [isCategoryInView, setIsCategoryInView] = useState(true)
   const [categoryIconIndex, setCategoryIconIndex] = useState(0)
   const [headerOffset, setHeaderOffset] = useState<number>(72)
@@ -429,6 +430,11 @@ export default function DopeTechEcommerce() {
   useEffect(() => {
     setShowBackToCategories(!isCategoryInView)
   }, [isCategoryInView])
+
+  // Show jump button when categories are not in view
+  useEffect(() => {
+    setShowJumpButton(showBackToCategories)
+  }, [showBackToCategories])
 
   // Optimized poster auto-scroll
   useEffect(() => {
@@ -1083,13 +1089,13 @@ export default function DopeTechEcommerce() {
           {/* Products Grid - Mobile Optimized 2x2 */}
           <div 
             data-products-section
-            className={`grid gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8 mt-6 sm:mt-8 md:mt-10 lg:mt-12 cv-auto ${
+            className={`grid gap-4 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 mt-6 sm:mt-8 md:mt-10 lg:mt-12 cv-auto ${
               viewMode === "grid" 
                 ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" 
                 : "grid-cols-1"
             }`}>
             {filteredProducts.map((product, index) => (
-              <div key={product.id} data-product-id={product.id} className="group animate-fade-in-up mobile-product-card hover-lift product-card-fluid scroll-animate" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div key={product.id} data-product-id={product.id} className="group animate-fade-in-up hover-lift product-card-fluid scroll-animate" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div 
                   className="relative overflow-hidden rounded-2xl card-elevated cursor-pointer"
                   onClick={() => router.push(`/product/${product.id}`)}
@@ -1406,36 +1412,34 @@ export default function DopeTechEcommerce() {
 
 
 
-      {/* Jump to Categories floating button */}
-      {showBackToCategories && !cartOpen && !checkoutModalOpen && (
+      {/* Jump to Categories floating button - Circular like AI chat */}
+      {!cartOpen && !checkoutModalOpen && !isCategoryInView && (
         <button
           onClick={scrollToCategoryFilters}
-          className="fixed right-2 sm:right-4 md:right-6 bottom-20 sm:bottom-24 md:bottom-28 z-50 flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-full frosted-glass-yellow frosted-glass-yellow-hover"
+          className="fixed bottom-6 right-4 md:bottom-8 md:right-6 z-[9999] frosted-glass-yellow frosted-glass-yellow-hover text-black p-4 rounded-full touch-manipulation flex items-center justify-center transition-all duration-300 ease-in-out shadow-lg"
+          style={{ minHeight: '56px', minWidth: '56px', maxWidth: '56px', maxHeight: '56px' }}
           aria-label="Jump to categories"
+          title={`Debug: showBackToCategories=${showBackToCategories}, showJumpButton=${showJumpButton}, isCategoryInView=${isCategoryInView}`}
         >
-          {/* Circle icon wrapper styled like the chat icon */}
-          <span className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#F7DD0F] text-black shadow-lg overflow-hidden">
-            {(() => {
-              const item = categories[categoryIconIndex]
-              if (!item) return null
-              const key = `${item.id}-${categoryIconIndex}`
-              const commonClasses = "w-4 h-4 sm:w-5 sm:h-5 animate-fade-in animate-scale-in will-change-opacity will-change-transform"
-              if (typeof item.icon === 'object' && 'type' in item.icon && (item.icon as any).type === 'svg') {
-                return (
-                  <span key={key} className="inline-flex items-center justify-center">
-                    <SvgIcon svgContent={(item.icon as { type: 'svg', content: string }).content} className={commonClasses} />
-                  </span>
-                )
-              }
-              const IconComp = item.icon as React.ComponentType<{ className?: string }>
+          {(() => {
+            const item = categories[categoryIconIndex]
+            if (!item) return null
+            const key = `${item.id}-${categoryIconIndex}`
+            const commonClasses = "w-5 h-5 block text-[#F7DD0F] animate-fade-in animate-scale-in will-change-opacity will-change-transform"
+            if (typeof item.icon === 'object' && 'type' in item.icon && (item.icon as any).type === 'svg') {
               return (
                 <span key={key} className="inline-flex items-center justify-center">
-                  <IconComp className={commonClasses} />
+                  <SvgIcon svgContent={(item.icon as { type: 'svg', content: string }).content} className={commonClasses} />
                 </span>
               )
-            })()}
-          </span>
-          <span className="text-xs sm:text-sm font-bold">Jump to <span className="text-[#F7DD0F]">Categories</span></span>
+            }
+            const IconComp = item.icon as React.ComponentType<{ className?: string }>
+            return (
+              <span key={key} className="inline-flex items-center justify-center">
+                <IconComp className={commonClasses} />
+              </span>
+            )
+          })()}
         </button>
       )}
 
