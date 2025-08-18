@@ -252,7 +252,7 @@ export function OrdersManager() {
   })
 
   return (
-    <div className="orders-container">
+    <div className="orders-container space-y-6 sm:space-y-8">
       {/* Debug indicator - removed since issue is fixed */}
       
       {/* Header Card */}
@@ -287,16 +287,16 @@ export function OrdersManager() {
       </Card>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <Card className="bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl">
           <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm text-gray-400 mb-1">Total</p>
-                <p className="text-lg sm:text-xl font-bold text-white">{stats.total}</p>
+                <p className="text-xs sm:text-sm text-gray-400 mb-2">Total</p>
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{stats.total}</p>
               </div>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 ml-3">
-                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-blue-500/20 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 ml-3">
+                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-blue-400" />
               </div>
             </div>
           </CardContent>
@@ -390,10 +390,10 @@ export function OrdersManager() {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6 space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-white">Search Orders</label>
+        <CardContent className="p-6 sm:p-8 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <div className="space-y-4">
+              <label className="text-sm sm:text-base font-semibold text-white">Search Orders</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
@@ -406,8 +406,8 @@ export function OrdersManager() {
               </div>
             </div>
             
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-white">Filter by Status</label>
+            <div className="space-y-4">
+              <label className="text-sm sm:text-base font-semibold text-white">Filter by Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -422,9 +422,9 @@ export function OrdersManager() {
             </div>
           </div>
           
-          <div className="flex items-center justify-center p-4 bg-white/5 rounded-xl border border-white/20">
+          <div className="flex items-center justify-center p-6 sm:p-8 bg-white/5 rounded-xl border border-white/20">
             <Package className="w-5 h-5 text-blue-400 mr-3" />
-            <span className="text-sm text-gray-300 font-semibold">
+            <span className="text-sm sm:text-base text-gray-300 font-semibold">
               {filteredOrders.length} Orders Found
             </span>
           </div>
@@ -433,30 +433,30 @@ export function OrdersManager() {
 
       {/* Orders List */}
       <Card className="bg-white/5 backdrop-blur-xl border border-white/20 shadow-xl orders-card">
-        <CardHeader className="pb-4 sm:pb-6 border-b border-white/10 p-4 sm:p-6">
-          <div className="flex items-center gap-2 sm:gap-3 overflow-fix">
+        <CardHeader className="pb-6 sm:pb-8 border-b border-white/10 p-4 sm:p-6">
+          <div className="flex items-center gap-3 sm:gap-4 overflow-fix">
             <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-lg sm:rounded-xl flex-shrink-0">
               <Package className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
             </div>
             <div className="flex-fix">
-              <CardTitle className="text-base sm:text-lg lg:text-xl font-bold text-white">
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                 Orders List
               </CardTitle>
-              <p className="text-xs sm:text-sm text-gray-300 mt-1">
+              <p className="text-sm sm:text-base text-gray-300 mt-2">
                 Click on any order to view details
               </p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6">
+        <CardContent className="p-6 sm:p-8">
           {filteredOrders.length === 0 ? (
-            <div className="text-center py-8 sm:py-12 text-gray-400">
+            <div className="text-center py-12 sm:py-16 text-gray-400">
               <ShoppingCart className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 opacity-50" />
               <p className="text-sm sm:text-base">No orders found</p>
               <p className="text-xs sm:text-sm mt-1">Try adjusting your search or status filters</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4 sm:space-y-6">
               
               {filteredOrders.map((order) => (
                 <Card
@@ -467,54 +467,54 @@ export function OrdersManager() {
                   <CardContent className="p-0">
                     {/* Mobile Layout */}
                     <div className="block sm:hidden">
-                      <div className="p-3">
+                      <div className="p-4 sm:p-5">
                         {/* Header Row */}
-                        <div className="flex items-start gap-2 mb-2">
-                          <div className="w-6 h-6 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <ShoppingCart className="w-3 h-3 text-blue-400" />
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <ShoppingCart className="w-4 h-4 text-blue-400" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-xs font-semibold text-white break-all leading-tight mb-1">
+                            <h3 className="text-sm font-semibold text-white break-all leading-tight mb-2">
                               {order.order_id}
                             </h3>
-                            <p className="text-xs text-gray-400 mb-1">{order.customer_name}</p>
+                            <p className="text-sm text-gray-400 mb-2">{order.customer_name}</p>
                             
                             {/* Status badges */}
-                            <div className="flex flex-wrap gap-1">
-                              <span className={`px-1.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.order_status)}`}>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.order_status)}`}>
                                 {order.order_status}
                               </span>
-                                                             <span className={`px-1.5 py-0.5 rounded-full text-xs font-medium ${getPaymentStatusColor(order.payment_status)}`}>
-                                 {formatPaymentStatus(order.payment_status || '', order.payment_option || '')}
-                               </span>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPaymentStatusColor(order.payment_status)}`}>
+                                {formatPaymentStatus(order.payment_status || '', order.payment_option || '')}
+                              </span>
                             </div>
                           </div>
                         </div>
 
                         {/* Contact Info */}
-                        <div className="space-y-1 mb-2">
-                          <div className="flex items-center gap-1.5">
-                            <Mail className="w-3 h-3 text-gray-400 flex-shrink-0" />
-                            <span className="text-xs text-gray-300 break-all">{order.customer_email}</span>
+                        <div className="space-y-2 mb-3">
+                          <div className="flex items-center gap-2">
+                            <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            <span className="text-sm text-gray-300 break-all">{order.customer_email}</span>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Phone className="w-3 h-3 text-gray-400 flex-shrink-0" />
-                            <span className="text-xs text-gray-300 break-all">{order.customer_phone}</span>
+                          <div className="flex items-center gap-2">
+                            <Phone className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            <span className="text-sm text-gray-300 break-all">{order.customer_phone}</span>
                           </div>
                         </div>
 
                         {/* Footer */}
-                        <div className="flex items-center justify-between pt-2 border-t border-white/5">
-                          <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3 text-gray-400" />
-                              <span className="text-xs text-gray-500">{formatDate(order.created_at)}</span>
+                        <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-gray-400" />
+                              <span className="text-sm text-gray-500">{formatDate(order.created_at)}</span>
                             </div>
-                            <span className="text-xs text-gray-500">•</span>
-                            <span className="text-xs text-gray-500">{order.order_items?.length || 0} items</span>
+                            <span className="text-sm text-gray-500">•</span>
+                            <span className="text-sm text-gray-500">{order.order_items?.length || 0} items</span>
                           </div>
-                                                     <div className="flex items-center gap-1.5">
-                             <span className="text-xs font-semibold text-blue-400">Rs {order.total_amount}</span>
+                                                     <div className="flex items-center gap-2">
+                             <span className="text-sm font-semibold text-blue-400">Rs {order.total_amount}</span>
                              <select
                                value={order.order_status}
                                onChange={(e) => {
@@ -522,7 +522,7 @@ export function OrdersManager() {
                                  handleStatusUpdate(order.id, e.target.value)
                                }}
                                disabled={updatingStatus}
-                               className="px-1.5 py-0.5 bg-white/10 border border-white/20 rounded text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xs disabled:opacity-50"
+                               className="px-2 py-1 bg-white/10 border border-white/20 rounded text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xs disabled:opacity-50"
                                onClick={(e) => e.stopPropagation()}
                              >
                                <option value="processing" className="bg-slate-800">Processing</option>
@@ -537,9 +537,9 @@ export function OrdersManager() {
                                }}
                                variant="outline"
                                size="sm"
-                               className="h-6 px-1.5 border-white/20 text-white hover:bg-white/10"
+                               className="h-8 px-2 border-white/20 text-white hover:bg-white/10"
                              >
-                               <Eye className="w-3 h-3" />
+                               <Eye className="w-4 h-4" />
                              </Button>
                            </div>
                         </div>
@@ -548,18 +548,18 @@ export function OrdersManager() {
 
                     {/* Desktop Layout */}
                     <div className="hidden sm:block">
-                      <div className="p-6">
+                      <div className="p-6 sm:p-8">
                         <div className="flex items-center justify-between">
                           {/* Left Section */}
-                          <div className="flex items-center gap-4 flex-1 min-w-0">
+                          <div className="flex items-center gap-6 flex-1 min-w-0">
                             {/* Icon */}
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                              <ShoppingCart className="w-5 h-5 text-blue-400" />
+                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                              <ShoppingCart className="w-6 h-6 text-blue-400" />
                             </div>
 
                             {/* Order Details */}
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-4 mb-2">
+                              <div className="flex items-center gap-6 mb-3">
                                 <h3 className="text-base font-semibold text-white truncate">
                                   {order.order_id}
                                 </h3>
@@ -567,17 +567,17 @@ export function OrdersManager() {
                                 <span className="text-sm text-gray-400">{order.customer_name}</span>
                               </div>
                               
-                              <div className="flex items-center gap-6">
-                                <div className="flex items-center gap-2">
-                                  <Mail className="w-4 h-4 text-gray-400" />
+                              <div className="flex items-center gap-8">
+                                <div className="flex items-center gap-3">
+                                  <Mail className="w-5 h-5 text-gray-400" />
                                   <span className="text-sm text-gray-300 truncate max-w-[200px]">{order.customer_email}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <Phone className="w-4 h-4 text-gray-400" />
+                                <div className="flex items-center gap-3">
+                                  <Phone className="w-5 h-5 text-gray-400" />
                                   <span className="text-sm text-gray-300">{order.customer_phone}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <Calendar className="w-4 h-4 text-gray-400" />
+                                <div className="flex items-center gap-3">
+                                  <Calendar className="w-5 h-5 text-gray-400" />
                                   <span className="text-sm text-gray-500">{formatDate(order.created_at)}</span>
                                 </div>
                               </div>
@@ -585,27 +585,27 @@ export function OrdersManager() {
                           </div>
 
                           {/* Right Section */}
-                          <div className="flex items-center gap-6 flex-shrink-0">
+                          <div className="flex items-center gap-8 flex-shrink-0">
                             {/* Status */}
-                            <div className="flex flex-col items-end gap-1">
-                              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.order_status)}`}>
+                            <div className="flex flex-col items-end gap-2">
+                              <span className={`px-4 py-2 rounded-full text-sm font-medium ${getStatusColor(order.order_status)}`}>
                                 {order.order_status}
                               </span>
-                                                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${getPaymentStatusColor(order.payment_status)}`}>
-                                 {formatPaymentStatus(order.payment_status || '', order.payment_option || '')}
-                               </span>
+                              <span className={`px-4 py-2 rounded-full text-sm font-medium ${getPaymentStatusColor(order.payment_status)}`}>
+                                {formatPaymentStatus(order.payment_status || '', order.payment_option || '')}
+                              </span>
                             </div>
 
                             {/* Items Count */}
                             <div className="text-center">
-                              <div className="text-sm text-gray-400">Items</div>
-                              <div className="text-lg font-semibold text-white">{order.order_items?.length || 0}</div>
+                              <div className="text-sm text-gray-400 mb-1">Items</div>
+                              <div className="text-xl font-semibold text-white">{order.order_items?.length || 0}</div>
                             </div>
 
                             {/* Price */}
                             <div className="text-center">
-                              <div className="text-sm text-gray-400">Total</div>
-                              <div className="text-lg font-bold text-blue-400">Rs {order.total_amount}</div>
+                              <div className="text-sm text-gray-400 mb-1">Total</div>
+                              <div className="text-xl font-bold text-blue-400">Rs {order.total_amount}</div>
                             </div>
 
                                                          {/* Status Update Dropdown */}
@@ -653,15 +653,15 @@ export function OrdersManager() {
       {/* Order Details Modal */}
       {orderDetailsOpen && selectedOrder && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-xl p-4 sm:p-6 max-w-2xl sm:max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4 sm:mb-6">
-              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                <div className="p-2 sm:p-3 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg sm:rounded-xl flex-shrink-0">
-                  <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+          <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-xl p-6 sm:p-8 max-w-2xl sm:max-w-4xl lg:max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6 sm:mb-8">
+              <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+                <div className="p-3 sm:p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg sm:rounded-xl flex-shrink-0">
+                  <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white order-id-text leading-tight">Order Details</h2>
-                  <p className="text-xs sm:text-sm text-gray-300 mt-1 order-id-text">Order ID: {selectedOrder.order_id}</p>
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white order-id-text leading-tight">Order Details</h2>
+                  <p className="text-sm sm:text-base text-gray-300 mt-2 order-id-text">Order ID: {selectedOrder.order_id}</p>
                 </div>
               </div>
               <Button
@@ -674,38 +674,38 @@ export function OrdersManager() {
               </Button>
             </div>
 
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-6 sm:space-y-8">
               {/* Order Header */}
-              <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6">
-                <Card className="bg-white/5 border border-white/20">
-                  <CardHeader className="pb-3 sm:pb-4 p-3 sm:p-4">
-                    <CardTitle className="text-sm sm:text-base font-semibold text-white">Order Information</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <span className="text-xs sm:text-sm text-gray-400">Order ID:</span>
-                      <span className="text-xs sm:text-sm text-white font-mono order-id-text">{selectedOrder.order_id}</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <span className="text-xs sm:text-sm text-gray-400">Date:</span>
-                      <span className="text-xs sm:text-sm text-white">{formatDate(selectedOrder.created_at)}</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <span className="text-xs sm:text-sm text-gray-400">Total Amount:</span>
-                      <span className="text-sm sm:text-base text-blue-400 font-bold">Rs {selectedOrder.total_amount}</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <span className="text-xs sm:text-sm text-gray-400">Payment Option:</span>
-                      <span className="text-xs sm:text-sm text-white capitalize">{selectedOrder.payment_option}</span>
-                    </div>
+                              <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:gap-8">
+                  <Card className="bg-white/5 border border-white/20">
+                    <CardHeader className="pb-4 sm:pb-6 p-4 sm:p-6">
+                      <CardTitle className="text-base sm:text-lg font-semibold text-white">Order Information</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <span className="text-sm sm:text-base text-gray-400">Order ID:</span>
+                        <span className="text-sm sm:text-base text-white font-mono order-id-text">{selectedOrder.order_id}</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <span className="text-sm sm:text-base text-gray-400">Date:</span>
+                        <span className="text-sm sm:text-base text-white">{formatDate(selectedOrder.created_at)}</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <span className="text-sm sm:text-base text-gray-400">Total Amount:</span>
+                        <span className="text-base sm:text-lg text-blue-400 font-bold">Rs {selectedOrder.total_amount}</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <span className="text-sm sm:text-base text-gray-400">Payment Option:</span>
+                        <span className="text-sm sm:text-base text-white capitalize">{selectedOrder.payment_option}</span>
+                      </div>
                   </CardContent>
                 </Card>
 
                                  <Card className="bg-white/5 border border-white/20">
-                   <CardHeader className="pb-3 sm:pb-4 p-3 sm:p-4">
-                     <CardTitle className="text-sm sm:text-base font-semibold text-white">Status</CardTitle>
+                   <CardHeader className="pb-4 sm:pb-6 p-4 sm:p-6">
+                     <CardTitle className="text-base sm:text-lg font-semibold text-white">Status</CardTitle>
                    </CardHeader>
-                   <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+                   <CardContent className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                        <span className="text-xs sm:text-sm text-gray-400">Order Status:</span>
                        <div className="flex items-center gap-2">
@@ -740,27 +740,27 @@ export function OrdersManager() {
 
               {/* Customer Information */}
               <Card className="bg-white/5 border border-white/20">
-                <CardHeader className="pb-3 sm:pb-4 p-3 sm:p-4">
-                  <CardTitle className="text-sm sm:text-base font-semibold text-white">Customer Information</CardTitle>
+                <CardHeader className="pb-4 sm:pb-6 p-4 sm:p-6">
+                  <CardTitle className="text-base sm:text-lg font-semibold text-white">Customer Information</CardTitle>
                 </CardHeader>
-                <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3">
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <User className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm sm:text-base text-white modal-text-safe">{selectedOrder.customer_name}</span>
+                <CardContent className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <User className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-base sm:text-lg text-white modal-text-safe">{selectedOrder.customer_name}</span>
                   </div>
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <Mail className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm sm:text-base text-white email-text">{selectedOrder.customer_email}</span>
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <Mail className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-base sm:text-lg text-white email-text">{selectedOrder.customer_email}</span>
                   </div>
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <Phone className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm sm:text-base text-white phone-text">{selectedOrder.customer_phone}</span>
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <Phone className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-base sm:text-lg text-white phone-text">{selectedOrder.customer_phone}</span>
                   </div>
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <MapPin className="w-4 h-4 text-gray-400 mt-1 flex-shrink-0" />
-                    <div className="text-sm sm:text-base text-white min-w-0 flex-1">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <MapPin className="w-5 h-5 text-gray-400 mt-1 flex-shrink-0" />
+                    <div className="text-base sm:text-lg text-white min-w-0 flex-1">
                       <p className="address-text">{selectedOrder.customer_address}</p>
-                      <p className="text-xs sm:text-sm text-gray-400 mt-1 address-text">
+                      <p className="text-sm sm:text-base text-gray-400 mt-2 address-text">
                         {selectedOrder.customer_city}, {selectedOrder.customer_state} {selectedOrder.customer_zip_code}
                       </p>
                     </div>
@@ -770,33 +770,33 @@ export function OrdersManager() {
 
               {/* Order Items */}
               <Card className="bg-white/5 border border-white/20">
-                <CardHeader className="pb-3 sm:pb-4 p-3 sm:p-4">
-                  <CardTitle className="text-sm sm:text-base font-semibold text-white">Order Items</CardTitle>
+                <CardHeader className="pb-4 sm:pb-6 p-4 sm:p-6">
+                  <CardTitle className="text-base sm:text-lg font-semibold text-white">Order Items</CardTitle>
                 </CardHeader>
-                <CardContent className="p-3 sm:p-4">
-                  <div className="space-y-3">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="space-y-4">
                     {selectedOrder.order_items && selectedOrder.order_items.length > 0 ? (
                       selectedOrder.order_items.map((item) => (
                         <div
                           key={item.id}
-                          className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 rounded-lg border border-white/10"
+                          className="flex items-start gap-4 sm:gap-6 p-4 sm:p-6 bg-white/5 rounded-lg border border-white/10"
                         >
                           <img
                             src={item.product_image || '/placeholder-product.svg'}
                             alt={item.product_name}
-                            className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover flex-shrink-0"
+                            className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover flex-shrink-0"
                             onError={(e) => {
                               const target = e.target as HTMLImageElement
                               target.src = '/placeholder-product.svg'
                             }}
                           />
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-sm sm:text-base text-white font-medium modal-text-safe leading-tight">{item.product_name}</h4>
-                            <p className="text-xs sm:text-sm text-gray-400 mt-1">Quantity: {item.quantity}</p>
+                            <h4 className="text-base sm:text-lg text-white font-medium modal-text-safe leading-tight">{item.product_name}</h4>
+                            <p className="text-sm sm:text-base text-gray-400 mt-2">Quantity: {item.quantity}</p>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <p className="text-sm sm:text-base text-blue-400 font-semibold whitespace-nowrap">Rs {item.price}</p>
-                            <p className="text-xs sm:text-sm text-gray-400 whitespace-nowrap">Total: Rs {item.price * item.quantity}</p>
+                            <p className="text-base sm:text-lg text-blue-400 font-semibold whitespace-nowrap">Rs {item.price}</p>
+                            <p className="text-sm sm:text-base text-gray-400 whitespace-nowrap">Total: Rs {item.price * item.quantity}</p>
                           </div>
                         </div>
                       ))
@@ -813,22 +813,22 @@ export function OrdersManager() {
               {/* Receipt Section */}
               {(selectedOrder.receipt_url || selectedOrder.receipt_file_name) && (
                 <Card className="bg-white/5 border border-white/20">
-                  <CardHeader className="pb-3 sm:pb-4 p-3 sm:p-4">
-                    <CardTitle className="text-sm sm:text-base font-semibold text-white">Payment Receipt</CardTitle>
+                  <CardHeader className="pb-4 sm:pb-6 p-4 sm:p-6">
+                    <CardTitle className="text-base sm:text-lg font-semibold text-white">Payment Receipt</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-3 sm:p-4 space-y-3 sm:space-y-4">
-                    <div className="bg-white/5 rounded-lg border border-white/10 p-3 sm:p-4">
-                      <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-                        <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 flex-shrink-0 mt-1" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm sm:text-base text-white font-medium modal-text-safe leading-tight">
-                            {selectedOrder.receipt_file_name || 'Receipt'}
-                          </p>
-                          <p className="text-xs sm:text-sm text-gray-400 mt-1">Payment proof uploaded by customer</p>
-                          {selectedOrder.receipt_url && (
-                            <p className="text-xs text-gray-500 mt-1 order-id-text">URL: {selectedOrder.receipt_url}</p>
-                          )}
-                        </div>
+                  <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                                          <div className="bg-white/5 rounded-lg border border-white/10 p-4 sm:p-6">
+                        <div className="flex items-start gap-4 sm:gap-6 mb-4 sm:mb-6">
+                          <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400 flex-shrink-0 mt-1" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-base sm:text-lg text-white font-medium modal-text-safe leading-tight">
+                              {selectedOrder.receipt_file_name || 'Receipt'}
+                            </p>
+                            <p className="text-sm sm:text-base text-gray-400 mt-2">Payment proof uploaded by customer</p>
+                            {selectedOrder.receipt_url && (
+                              <p className="text-sm text-gray-500 mt-2 order-id-text">URL: {selectedOrder.receipt_url}</p>
+                            )}
+                          </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
                           {selectedOrder.receipt_url ? (
                             <>
@@ -898,7 +898,7 @@ export function OrdersManager() {
               )}
 
               {/* Action Buttons */}
-              <div className="flex items-center justify-end pt-4 sm:pt-6 border-t border-white/10">
+              <div className="flex items-center justify-end pt-6 sm:pt-8 border-t border-white/10">
                 <Button
                   onClick={() => setOrderDetailsOpen(false)}
                   variant="outline"

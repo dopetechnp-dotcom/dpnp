@@ -414,21 +414,46 @@ export default function DopeTechEcommerce() {
     return () => clearInterval(interval)
   }, [])
 
-  // Optimized category section visibility
+  // Optimized category section visibility with fallback
   useEffect(() => {
     const el = categorySectionRef.current
     if (!el || typeof window === 'undefined') return
     
+    // Primary: Intersection Observer
     const observer = new IntersectionObserver(
-      ([entry]) => setIsCategoryInView(entry.isIntersecting),
+      ([entry]) => {
+        console.log('Intersection observer triggered:', entry.isIntersecting)
+        setIsCategoryInView(entry.isIntersecting)
+      },
       { root: null, threshold: 0.2 }
     )
     observer.observe(el)
-    return () => observer.disconnect()
+    
+    // Fallback: Scroll position check
+    const handleScroll = () => {
+      if (el) {
+        const rect = el.getBoundingClientRect()
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0
+        console.log('Scroll check:', { rectTop: rect.top, windowHeight: window.innerHeight, rectBottom: rect.bottom, isVisible })
+        setIsCategoryInView(isVisible)
+      }
+    }
+    
+    // Initial check with delay to ensure DOM is ready
+    setTimeout(handleScroll, 100)
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   useEffect(() => {
     setShowBackToCategories(!isCategoryInView)
+    // Debug logging
+    console.log('Category visibility changed:', { isCategoryInView, showBackToCategories: !isCategoryInView })
   }, [isCategoryInView])
 
   // Show jump button when categories are not in view
@@ -976,24 +1001,6 @@ export default function DopeTechEcommerce() {
                     <span className="font-medium text-sm">{category.name}</span>
                   </button>
                 ))}
-                
-                {/* Admin Link */}
-                <button
-                  onClick={() => {
-                    router.push('/admin')
-                    setIsMobileMenuOpen(false)
-                  }}
-                  className="w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl transition-all duration-200 text-white bg-red-600/20 border border-red-500/30 hover:bg-red-600/30 shadow-lg"
-                  style={{ minHeight: '48px', minWidth: '44px' }}
-                >
-                  <div className="flex-shrink-0 text-red-400">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <span className="font-medium text-sm">Admin Panel</span>
-                </button>
               </div>
             </div>
           )}
@@ -1413,7 +1420,7 @@ export default function DopeTechEcommerce() {
 
 
       {/* Jump to Categories floating button - Circular like AI chat */}
-      {!cartOpen && !checkoutModalOpen && !isCategoryInView && (
+      {!cartOpen && !checkoutModalOpen && !isCategoryInView && categories.length > 0 && (
         <button
           onClick={scrollToCategoryFilters}
           className="fixed bottom-6 right-4 md:bottom-8 md:right-6 z-[9999] frosted-glass-yellow frosted-glass-yellow-hover text-black p-4 rounded-full touch-manipulation flex items-center justify-center transition-all duration-300 ease-in-out shadow-lg"

@@ -191,17 +191,17 @@ export function QRCodeManager() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:space-y-8">
       {/* Upload Section */}
-      <div className="card-admin p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <QrCode className="w-5 h-5" />
+      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-6 sm:p-8">
+        <h3 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-3">
+          <QrCode className="w-6 h-6 text-blue-400" />
           Upload New QR Code
         </h3>
         
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm sm:text-base font-medium text-white mb-3">
               QR Code Name
             </label>
             <input
@@ -209,15 +209,15 @@ export function QRCodeManager() {
               value={qrCodeName}
               onChange={(e) => setQrCodeName(e.target.value)}
               placeholder="e.g., Payment QR Code"
-              className="input-admin"
+              className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm sm:text-base font-medium text-white mb-3">
               QR Code Image
             </label>
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-primary transition-colors">
+            <div className="border-2 border-dashed border-white/20 rounded-lg p-8 sm:p-10 text-center hover:border-blue-500/50 transition-colors bg-white/5">
               <input
                 type="file"
                 accept="image/*"
@@ -226,13 +226,13 @@ export function QRCodeManager() {
                 id="qr-upload"
               />
               <label htmlFor="qr-upload" className="cursor-pointer">
-                <div className="text-primary mb-2">
-                  <Upload className="w-8 h-8 mx-auto" />
+                <div className="text-blue-400 mb-4">
+                  <Upload className="w-10 h-10 sm:w-12 sm:h-12 mx-auto" />
                 </div>
-                <p className="text-gray-900 dark:text-white font-medium">
+                <p className="text-white font-medium text-base sm:text-lg">
                   {selectedFile ? selectedFile.name : 'Click to upload QR code image'}
                 </p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                <p className="text-gray-400 text-sm sm:text-base mt-2">
                   PNG, JPG up to 5MB
                 </p>
               </label>
@@ -240,9 +240,9 @@ export function QRCodeManager() {
           </div>
 
           {selectedFile && (
-            <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-3 flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-green-300" />
-              <p className="text-green-300 text-sm">✓ {selectedFile.name} selected</p>
+            <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 sm:p-5 flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400" />
+              <p className="text-green-400 text-sm sm:text-base">✓ {selectedFile.name} selected</p>
             </div>
           )}
 
@@ -251,7 +251,7 @@ export function QRCodeManager() {
             whileTap={{ scale: 0.98 }}
             onClick={uploadQRCode}
             disabled={uploading || !selectedFile || !qrCodeName.trim()}
-            className="btn-primary w-full"
+            className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 hover:scale-105 w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploading ? (
               <>
@@ -273,10 +273,10 @@ export function QRCodeManager() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 flex items-center gap-2"
+          className="bg-red-500/20 border border-red-500/30 rounded-lg p-4 sm:p-5 flex items-center gap-3"
         >
-          <AlertCircle className="w-4 h-4 text-red-300" />
-          <p className="text-red-300 text-sm">{error}</p>
+          <AlertCircle className="w-5 h-5 text-red-400" />
+          <p className="text-red-400 text-sm sm:text-base">{error}</p>
         </motion.div>
       )}
 
@@ -284,76 +284,76 @@ export function QRCodeManager() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-green-500/20 border border-green-500/30 rounded-lg p-3 flex items-center gap-2"
+          className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 sm:p-5 flex items-center gap-3"
         >
-          <CheckCircle className="w-4 h-4 text-green-300" />
-          <p className="text-green-300 text-sm">{success}</p>
+          <CheckCircle className="w-5 h-5 text-green-400" />
+          <p className="text-green-400 text-sm sm:text-base">{success}</p>
         </motion.div>
       )}
 
       {/* QR Codes List */}
-      <div className="card-admin p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-            <QrCode className="w-5 h-5" />
+      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-6 sm:p-8">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg sm:text-xl font-semibold text-white flex items-center gap-3">
+            <QrCode className="w-6 h-6 text-blue-400" />
             QR Codes ({qrCodes.length})
           </h3>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={loadQRCodes}
-            className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary"
+            className="p-2 text-gray-400 hover:text-blue-400 transition-colors duration-200"
           >
             <RefreshCw className="w-4 h-4" />
           </motion.button>
         </div>
 
         {loading ? (
-          <div className="space-y-4">
+          <div className="space-y-4 sm:space-y-6">
             {[1, 2, 3].map((item) => (
-              <div key={item} className="loading-skeleton h-20 rounded-lg"></div>
+              <div key={item} className="bg-white/5 border border-white/10 rounded-xl h-24 sm:h-28 animate-pulse"></div>
             ))}
           </div>
         ) : qrCodes.length === 0 ? (
-          <div className="text-center py-8">
-            <QrCode className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500 dark:text-gray-400">No QR codes uploaded yet</p>
+          <div className="text-center py-12 sm:py-16">
+            <QrCode className="w-16 h-16 sm:w-20 sm:h-20 text-gray-400 mx-auto mb-6" />
+            <p className="text-gray-400 text-base sm:text-lg">No QR codes uploaded yet</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4 sm:space-y-6">
             {qrCodes.map((qrCode) => (
               <motion.div
                 key={qrCode.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                className="flex items-center justify-between p-4 sm:p-6 bg-white/5 border border-white/10 rounded-xl hover:border-white/20 transition-all duration-200"
               >
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                    <ImageIcon className="w-6 h-6 text-gray-500" />
+                <div className="flex items-center space-x-4 sm:space-x-6">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <ImageIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">
+                    <h4 className="font-medium text-white text-base sm:text-lg">
                       {qrCode.name}
                       {qrCode.is_active && (
-                        <span className="ml-2 px-2 py-1 text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-full">
+                        <span className="ml-3 px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded-full">
                           Active
                         </span>
                       )}
                     </h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm sm:text-base text-gray-300 mt-1">
                       Uploaded {new Date(qrCode.created_at).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
                   {!qrCode.is_active && (
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => toggleActive(qrCode.id)}
-                      className="p-2 text-gray-600 dark:text-gray-400 hover:text-green-500"
+                      className="p-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors duration-200 text-green-400 hover:text-green-300"
                       title="Set as active"
                     >
                       <CheckCircle className="w-4 h-4" />
@@ -364,7 +364,7 @@ export function QRCodeManager() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => downloadQRCode(qrCode.image_url, qrCode.name)}
-                    className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-500"
+                    className="p-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors duration-200 text-blue-400 hover:text-blue-300"
                     title="Download"
                   >
                     <Download className="w-4 h-4" />
@@ -374,7 +374,7 @@ export function QRCodeManager() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => deleteQRCode(qrCode.id)}
-                    className="p-2 text-gray-600 dark:text-gray-400 hover:text-red-500"
+                    className="p-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg transition-colors duration-200 text-red-400 hover:text-red-300"
                     title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />

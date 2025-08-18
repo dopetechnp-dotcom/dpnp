@@ -277,8 +277,8 @@ export default function AIChatAssistant({ products, onAddToCart }: AIChatAssista
       {/* Mobile Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-4 md:bottom-8 md:right-6 z-50 frosted-glass-yellow frosted-glass-yellow-hover text-black p-4 rounded-full touch-manipulation ai-chat-assistant flex items-center justify-center"
-        style={{ minHeight: '56px', minWidth: '56px' }}
+        className="fixed bottom-6 left-4 md:bottom-8 md:left-6 z-50 frosted-glass-yellow frosted-glass-yellow-hover text-black p-4 rounded-full touch-manipulation flex items-center justify-center shadow-lg"
+        style={{ minHeight: '56px', minWidth: '56px', maxWidth: '56px', maxHeight: '56px' }}
         aria-label="Open AI Chat Assistant"
       >
         {isOpen ? <X className="w-5 h-5 block text-[#F7DD0F]" /> : <MessageCircle className="w-5 h-5 block text-[#F7DD0F]" />}
@@ -287,13 +287,31 @@ export default function AIChatAssistant({ products, onAddToCart }: AIChatAssista
       {/* Chat Window */}
       {isOpen && (
         <div 
-          className={`fixed left-2 right-2 z-50 md:bottom-24 md:right-6 md:left-auto md:transform-none md:w-96 lg:w-[28rem] xl:w-[32rem] bg-black/20 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden ${
-            keyboardVisible ? 'bottom-4' : 'bottom-20'
-          } ${keyboardVisible ? 'keyboard-visible' : ''}`}
+          className={`fixed z-50 bg-black/20 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden ${
+            // Mobile: Full width with proper spacing
+            'left-2 right-2 bottom-20 sm:bottom-24 ' +
+            // Desktop: Fixed width, positioned on left side
+            'md:left-6 md:right-auto md:bottom-24 md:w-96 lg:w-[28rem] xl:w-[32rem] ' +
+            // Height adjustments
+            (keyboardVisible ? 'bottom-4 sm:bottom-6' : '') +
+            (keyboardVisible ? 'keyboard-visible' : '')
+          }`}
           style={{ 
-            height: keyboardVisible ? '30vh' : '35vh',
-            maxHeight: keyboardVisible ? '250px' : '300px',
-            minHeight: keyboardVisible ? '200px' : '250px'
+            // Mobile: Responsive height
+            height: keyboardVisible 
+              ? (window.innerWidth <= 640 ? '40vh' : '35vh')  // Smaller on mobile when keyboard is visible
+              : (window.innerWidth <= 640 ? '50vh' : '60vh'), // Larger on mobile when keyboard is hidden
+            // Desktop: Fixed height
+            ...(window.innerWidth > 768 && {
+              height: keyboardVisible ? '400px' : '500px',
+              maxHeight: keyboardVisible ? '400px' : '500px',
+              minHeight: keyboardVisible ? '350px' : '450px'
+            }),
+            // Mobile: Dynamic height constraints
+            ...(window.innerWidth <= 768 && {
+              maxHeight: keyboardVisible ? '300px' : '400px',
+              minHeight: keyboardVisible ? '250px' : '300px'
+            })
           }}
         >
           {/* Header */}

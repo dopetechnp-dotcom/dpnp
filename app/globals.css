@@ -1659,7 +1659,7 @@ body *::-webkit-scrollbar-thumb:hover {
   
   /* Mobile-specific spacing */
   .mobile-product-card {
-    margin-bottom: 1.5rem;
+    /* Removed margin-bottom to fix inconsistent grid spacing */
   }
   
   /* Ensure chat icon doesn't overlap */
