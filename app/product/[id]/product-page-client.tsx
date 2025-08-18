@@ -28,7 +28,8 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
     cartOpen, 
     setCartOpen,
     checkoutModalOpen,
-    setCheckoutModalOpen
+    setCheckoutModalOpen,
+    clearCart
   } = useCart()
 
   const handleAddToCart = () => {
@@ -38,8 +39,16 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
   }
 
   const handleBuyNow = () => {
-    // Buy now logic here
-    console.log('Buy now:', product)
+    // Clear current cart and add only this product
+    clearCart()
+    
+    // Add the current product with selected quantity
+    addToCart(product, quantity)
+    
+    // Open checkout modal directly
+    setCheckoutModalOpen(true)
+    
+    console.log('Buy now:', product, 'Quantity:', quantity)
   }
 
   const handleWishlist = () => {
@@ -302,13 +311,13 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
             <div className="flex flex-col h-full">
               {/* Cart Header */}
               <div className="flex items-center justify-between p-3 sm:p-4 md:p-6 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-base sm:text-lg md:text-xl font-semibold">Shopping Cart</h2>
+                <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 dark:text-white">Shopping Cart</h2>
                 <button
                   onClick={() => setCartOpen(false)}
                   className="p-2 sm:p-3 hover:bg-gray-100 dark:hover:bg-[#2a2a2a] rounded-full transition-colors touch-target"
                   style={{ minHeight: '44px', minWidth: '44px' }}
                 >
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-900 dark:text-white" />
                 </button>
               </div>
 
@@ -316,8 +325,8 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
               <div className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 scrollbar-hide">
                 {cart.length === 0 ? (
                   <div className="text-center py-8 sm:py-12">
-                    <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
-                    <p className="text-sm sm:text-base text-gray-400">Your cart is empty</p>
+                    <ShoppingBag className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 dark:text-gray-500 mx-auto mb-3 sm:mb-4" />
+                    <p className="text-sm sm:text-base text-gray-400 dark:text-gray-300">Your cart is empty</p>
                   </div>
                 ) : (
                   <div className="space-y-3 sm:space-y-4">
@@ -329,7 +338,7 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
                           className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg flex-shrink-0"
                         />
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-medium text-xs sm:text-sm line-clamp-2 leading-tight">{item.name}</h3>
+                          <h3 className="font-medium text-xs sm:text-sm line-clamp-2 leading-tight text-gray-900 dark:text-white">{item.name}</h3>
                           <p className="text-[#F7DD0F] font-bold text-sm sm:text-base">Rs {item.price}</p>
                         </div>
                         <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
@@ -338,15 +347,15 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
                             className="p-2 sm:p-1.5 hover:bg-gray-200 dark:hover:bg-[#2a2a2a] rounded touch-target"
                             style={{ minHeight: '44px', minWidth: '44px' }}
                           >
-                            <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
+                            <Minus className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900 dark:text-white" />
                           </button>
-                          <span className="w-6 sm:w-8 text-center font-medium text-sm sm:text-base">{item.quantity}</span>
+                          <span className="w-6 sm:w-8 text-center font-medium text-sm sm:text-base text-gray-900 dark:text-white">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="p-2 sm:p-1.5 hover:bg-gray-200 dark:hover:bg-[#2a2a2a] rounded touch-target"
                             style={{ minHeight: '44px', minWidth: '44px' }}
                           >
-                            <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+                            <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900 dark:text-white" />
                           </button>
                         </div>
                         <button
@@ -354,7 +363,7 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
                           className="p-2 sm:p-1.5 hover:bg-red-100 dark:hover:bg-red-900/20 rounded text-red-500 touch-target"
                           style={{ minHeight: '44px', minWidth: '44px' }}
                         >
-                          <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                          <X className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
                         </button>
                       </div>
                     ))}
@@ -366,7 +375,7 @@ export default function ProductPageClient({ product, relatedProducts }: ProductP
               {cart.length > 0 && (
                 <div className="border-t border-gray-200 dark:border-gray-700 p-3 sm:p-4 md:p-6">
                   <div className="flex justify-between items-center mb-3 sm:mb-4">
-                    <span className="text-base sm:text-lg font-semibold">Total:</span>
+                    <span className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">Total:</span>
                     <span className="text-xl sm:text-2xl font-bold text-[#F7DD0F]">Rs {getCartTotal().toFixed(2)}</span>
                   </div>
                   <button 
