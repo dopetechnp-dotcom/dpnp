@@ -27,11 +27,10 @@ export function useHeroImages() {
     setError(null)
     
     try {
-      // Load from the hero_images table
+      // Load ALL hero images (not just active ones) for admin management
       const { data: tableData, error: tableError } = await supabase
         .from('hero_images')
         .select('*')
-        .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false })
 

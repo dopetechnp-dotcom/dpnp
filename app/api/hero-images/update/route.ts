@@ -11,12 +11,17 @@ export async function PUT(request: NextRequest) {
     }
 
     // Update the hero image in the database
+    const updateData = {
+      ...updates,
+      updated_at: new Date().toISOString()
+    }
+
+    // Handle show_content updates properly
+    // Note: show_content can be true, false, or undefined
+
     const { data, error } = await supabaseAdmin
       .from('hero_images')
-      .update({
-        ...updates,
-        updated_at: new Date().toISOString()
-      })
+      .update(updateData)
       .eq('id', id)
       .select()
       .single()

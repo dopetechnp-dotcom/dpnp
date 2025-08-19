@@ -134,40 +134,45 @@ export function HeroImageCarousel() {
       {/* Content - Centered both horizontally and vertically */}
       <div className="relative z-10 h-full flex items-center justify-center">
         <div className="text-center text-white px-4 sm:px-8 max-w-4xl">
-          {/* Title - Only show title for very small height */}
-          {currentImage.title && (
-            <h1 className="text-sm sm:text-base md:text-lg font-bold drop-shadow-lg animate-fade-in-up stagger-1">
-              {currentImage.title}
-            </h1>
-          )}
+          {/* Only show content if show_content is true */}
+          {currentImage.show_content !== false && (
+            <>
+              {/* Title */}
+              {currentImage.title && (
+                <h1 className="text-sm sm:text-base md:text-lg font-bold drop-shadow-lg animate-fade-in-up stagger-1">
+                  {currentImage.title}
+                </h1>
+              )}
 
-          {/* Subtitle - Only show if no description and no button */}
-          {currentImage.subtitle && !currentImage.description && !currentImage.button_text && (
-            <h2 className="text-xs sm:text-sm font-semibold drop-shadow-lg text-gray-200 animate-fade-in-up stagger-2">
-              {currentImage.subtitle}
-            </h2>
-          )}
+              {/* Subtitle - Only show if no description and no button */}
+              {currentImage.subtitle && !currentImage.description && !currentImage.button_text && (
+                <h2 className="text-xs sm:text-sm font-semibold drop-shadow-lg text-gray-200 animate-fade-in-up stagger-2">
+                  {currentImage.subtitle}
+                </h2>
+              )}
 
-          {/* Description - Only show if no button */}
-          {currentImage.description && !currentImage.button_text && (
-            <p className="text-xs drop-shadow-lg text-gray-300 animate-fade-in-up stagger-3">
-              {currentImage.description}
-            </p>
-          )}
+              {/* Description - Only show if no button */}
+              {currentImage.description && !currentImage.button_text && (
+                <p className="text-xs drop-shadow-lg text-gray-300 animate-fade-in-up stagger-3">
+                  {currentImage.description}
+                </p>
+              )}
 
-                     {/* CTA Button - if there's a button_text and button_link */}
-           {currentImage.button_text && currentImage.button_link && (
-             <div className="animate-fade-in-up stagger-4">
-               <Button 
-                 asChild
-                 className="bg-[#F7DD0F] hover:bg-[#F7DD0F]/90 text-black font-semibold px-6 py-3 text-base transition-all duration-200 hover:scale-105 shadow-lg"
-               >
-                 <a href={currentImage.button_link} target="_blank" rel="noopener noreferrer">
-                   {currentImage.button_text}
-                 </a>
-               </Button>
-             </div>
-           )}
+              {/* CTA Button - if there's a button_text and button_link */}
+              {currentImage.button_text && currentImage.button_link && (
+                <div className="animate-fade-in-up stagger-4">
+                  <Button 
+                    asChild
+                    className="bg-[#F7DD0F] hover:bg-[#F7DD0F]/90 text-black font-semibold px-6 py-3 text-base transition-all duration-200 hover:scale-105 shadow-lg"
+                  >
+                    <a href={currentImage.button_link} target="_blank" rel="noopener noreferrer">
+                      {currentImage.button_text}
+                    </a>
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
 

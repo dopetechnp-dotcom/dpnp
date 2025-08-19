@@ -122,8 +122,16 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         
         {/* Favicon */}
-        <link rel="icon" href="/logo/dopelogo.svg" />
-        <link rel="apple-touch-icon" href="/logo/dopelogo.svg" />
+        <link rel="icon" type="image/svg+xml" href="/logo/favicon.svg" />
+        <link rel="icon" type="image/png" href="/logo/favicon.svg" />
+        <link rel="apple-touch-icon" href="/logo/favicon.svg" />
+        <link rel="shortcut icon" href="/logo/favicon.svg" />
+        <link rel="mask-icon" href="/logo/favicon.svg" color="#F7DD0F" />
+        <link rel="icon" href="/logo/favicon.svg" sizes="any" />
+        <link rel="icon" href="/logo/favicon.svg" sizes="32x32" />
+        <link rel="icon" href="/logo/favicon.svg" sizes="16x16" />
+        <link rel="icon" href="/logo/favicon.svg" sizes="48x48" />
+        <link rel="icon" href="/logo/favicon.svg" sizes="192x192" />
         
         {/* Performance hints */}
         <link rel="dns-prefetch" href="//www.google-analytics.com" />

@@ -13,7 +13,7 @@ export async function DELETE(request: NextRequest) {
     // Get image data first to get the file name
     const { data: imageData, error: fetchError } = await supabaseAdmin
       .from('hero_images')
-      .select('file_name')
+      .select('image_file_name')
       .eq('id', imageId)
       .single()
 
@@ -22,10 +22,10 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Delete from storage
-    if (imageData.file_name) {
+    if (imageData.image_file_name) {
       const { error: storageError } = await supabaseAdmin.storage
         .from('hero-images')
-        .remove([imageData.file_name])
+        .remove([imageData.image_file_name])
 
       if (storageError) {
         console.error('❌ Error deleting from storage:', storageError)

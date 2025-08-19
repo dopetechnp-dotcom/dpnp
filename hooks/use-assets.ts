@@ -117,6 +117,8 @@ export function useLogoUrl() {
   useEffect(() => {
     const loadLogo = async () => {
       try {
+        console.log('🔄 Loading logo...')
+        
         // Check cache first
         const cachedLogo = sessionStorage.getItem('cachedLogoUrl')
         const cacheTime = sessionStorage.getItem('logoCacheTime')
@@ -124,21 +126,26 @@ export function useLogoUrl() {
         
         // Use cache if it's less than 10 minutes old
         if (cachedLogo && cacheAge < 10 * 60 * 1000) {
+          console.log('✅ Using cached logo:', cachedLogo)
           setLogoUrl(cachedLogo)
           return
         }
         
         setLoading(true)
+        console.log('🌐 Fetching logo from server...')
         const url = await getLogoUrl()
+        console.log('✅ Logo URL received:', url)
         setLogoUrl(url)
         
         // Cache the result
         sessionStorage.setItem('cachedLogoUrl', url)
         sessionStorage.setItem('logoCacheTime', Date.now().toString())
+        console.log('💾 Logo cached successfully')
       } catch (err) {
-        console.error('Error loading logo:', err)
+        console.error('❌ Error loading logo:', err)
         // Keep fallback
         setLogoUrl('/logo/dopelogo.svg')
+        console.log('🔄 Using fallback logo: /logo/dopelogo.svg')
       } finally {
         setLoading(false)
       }

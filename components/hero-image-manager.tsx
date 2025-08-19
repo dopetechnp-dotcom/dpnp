@@ -99,7 +99,21 @@ export function HeroImageManager() {
   }
 
   const toggleActive = async (image: HeroImage) => {
-    await updateHeroImage(image.id, { is_active: !image.is_active })
+    console.log('🔄 Toggle clicked for image:', image.id)
+    console.log('📊 Current state:', { is_active: image.is_active, show_content: image.show_content })
+    
+    // If the image is already active, toggle show_content instead
+    if (image.is_active) {
+      const newShowContent = !image.show_content
+      console.log('🔄 Toggling show_content from', image.show_content, 'to', newShowContent)
+      const success = await updateHeroImage(image.id, { show_content: newShowContent })
+      console.log('✅ Update result:', success)
+    } else {
+      // If the image is inactive, activate it and ensure show_content is true
+      console.log('🔄 Activating image and setting show_content to true')
+      const success = await updateHeroImage(image.id, { is_active: true, show_content: true })
+      console.log('✅ Update result:', success)
+    }
   }
 
   if (loading) {
@@ -399,11 +413,24 @@ export function HeroImageManager() {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute top-2 right-2">
-                        <Switch
-                          checked={image.is_active}
-                          onCheckedChange={() => toggleActive(image)}
-                          className="data-[state=checked]:bg-blue-500 data-[state=unchecked]:bg-gray-600"
-                        />
+                        <div className="relative group">
+                          <Switch
+                            checked={image.is_active}
+                            onCheckedChange={() => toggleActive(image)}
+                            className={`${
+                              image.is_active 
+                                ? image.show_content !== false 
+                                  ? 'data-[state=checked]:bg-blue-500' 
+                                  : 'data-[state=checked]:bg-orange-500'
+                                : 'data-[state=unchecked]:bg-gray-600'
+                            }`}
+                          />
+                          {image.is_active && (
+                            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                              {image.show_content !== false ? 'Click to hide text' : 'Click to show text'}
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="absolute bottom-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded font-bold">
                         Order: {image.display_order}
@@ -561,6 +588,15 @@ export function HeroImageManager() {
                             }`}>
                               {image.is_active ? 'Active' : 'Inactive'}
                             </span>
+                            {image.is_active && (
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                image.show_content !== false
+                                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+                                  : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                              }`}>
+                                {image.show_content !== false ? 'Show Text' : 'Hide Text'}
+                              </span>
+                            )}
                             <span>Order: {image.display_order}</span>
                             {image.button_text && (
                               <span>Button: {image.button_text}</span>
