@@ -122,54 +122,9 @@ export function EnhancedHeader({ onSearchToggle, onCategorySelect, className = '
               </span>
             </motion.div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors duration-200 font-medium text-sm lg:text-base"
-                onClick={() => handleCategoryClick('all')}
-              >
-                Home
-              </motion.button>
-              
-              {/* Categories Dropdown */}
-              <div className="relative">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors duration-200 font-medium text-sm lg:text-base"
-                  onClick={() => setActiveDropdown(activeDropdown === 'categories' ? null : 'categories')}
-                >
-                  <span>Categories</span>
-                  <ChevronDown className={`w-3 h-3 lg:w-4 lg:h-4 transition-transform duration-200 ${
-                    activeDropdown === 'categories' ? 'rotate-180' : ''
-                  }`} />
-                </motion.button>
-                
-                <AnimatePresence>
-                  {activeDropdown === 'categories' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="absolute top-full left-0 mt-2 w-56 lg:w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2"
-                    >
-                      {categories.map((category) => (
-                        <motion.button
-                          key={category.id}
-                          whileHover={{ backgroundColor: 'rgba(247, 221, 15, 0.1)' }}
-                          className="w-full px-3 lg:px-4 py-2 lg:py-3 text-left text-gray-700 dark:text-gray-300 hover:text-primary transition-colors duration-200 flex items-center space-x-2 lg:space-x-3 text-sm lg:text-base"
-                          onClick={() => handleCategoryClick(category.id)}
-                        >
-                          <category.icon className="w-3 h-3 lg:w-4 lg:h-4" />
-                          <span>{category.name}</span>
-                        </motion.button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+            {/* Desktop Navigation - Hidden to match design */}
+            <nav className="hidden lg:hidden">
+              {/* Navigation content hidden on desktop to match the design */}
             </nav>
 
             {/* Desktop Actions */}
@@ -202,14 +157,15 @@ export function EnhancedHeader({ onSearchToggle, onCategorySelect, className = '
                 )}
               </motion.button>
 
-              {/* User Menu */}
-              <motion.button
+              {/* Instagram */}
+              <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                href="#"
                 className="p-1.5 lg:p-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors duration-200"
               >
-                <User className="w-4 h-4 lg:w-5 lg:h-5" />
-              </motion.button>
+                <Instagram className="w-4 h-4 lg:w-5 lg:h-5" />
+              </motion.a>
             </div>
 
             {/* Mobile Menu Button */}

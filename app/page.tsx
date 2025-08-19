@@ -29,6 +29,7 @@ import {
   Laptop,
   Smartphone,
   Monitor,
+  ChevronDown,
 } from "lucide-react"
 // Removed CursorTracker (opt-in effect)
 import LazyAIChat from "@/components/lazy-ai-chat"
@@ -98,6 +99,7 @@ export default function DopeTechEcommerce() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchModalReady, setSearchModalReady] = useState(false)
   const [currentProducts, setCurrentProducts] = useState<Product[]>([])
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   
 
   
@@ -392,6 +394,23 @@ export default function DopeTechEcommerce() {
     window.addEventListener('resize', handleResize, { passive: true })
     return () => window.removeEventListener('resize', handleResize)
   }, [isMobileMenuOpen])
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleDropdownClickOutside = (event: MouseEvent) => {
+      if (activeDropdown && !(event.target as Element).closest('[data-dropdown]')) {
+        setActiveDropdown(null)
+      }
+    }
+
+    if (activeDropdown) {
+      document.addEventListener('mousedown', handleDropdownClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleDropdownClickOutside)
+    }
+  }, [activeDropdown])
 
   // Optimized theme setting
   useEffect(() => {
@@ -845,7 +864,25 @@ export default function DopeTechEcommerce() {
       <header className="fixed top-0 left-0 right-0 z-50 dopetech-nav animate-fade-in-down">
         <div className="container-max py-4">
           <nav className="flex items-center justify-between h-auto min-h-20">
-            {/* Left Side - Logo */}
+            {/* Left Side - Mobile Menu Toggle (mobile only) */}
+            <div className="flex items-center md:hidden pt-1">
+              <ClientOnly fallback={<button className="p-2 touch-target flex items-center justify-center" aria-label="Menu"><Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" /></button>}>
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="p-2 touch-target flex items-center justify-center"
+                  aria-label="Menu"
+                  data-mobile-menu
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="w-6 h-6 hover:text-[#F7DD0F] transition-colors animate-scale-in" />
+                  ) : (
+                    <Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
+                  )}
+                </button>
+              </ClientOnly>
+            </div>
+
+            {/* Left Side - Logo and Tagline */}
             <div className="flex items-center space-x-3 min-w-0 flex-1 pt-1">
               <img 
                 src={logoLoading ? "/logo/simple-logo.svg" : logoUrl} 
@@ -865,6 +902,8 @@ export default function DopeTechEcommerce() {
                 </ClientOnly>
               </div>
             </div>
+
+
 
             {/* Right Side - Controls */}
             <div className="flex items-center justify-end space-x-4 flex-shrink-0 pt-1">
@@ -903,22 +942,6 @@ export default function DopeTechEcommerce() {
               >
                 <Instagram className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
               </a>
-
-              {/* Mobile Menu Toggle */}
-              <ClientOnly fallback={<button className="md:hidden p-2 touch-target flex items-center justify-center" aria-label="Menu"><Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" /></button>}>
-                <button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="md:hidden p-2 touch-target flex items-center justify-center"
-                  aria-label="Menu"
-                  data-mobile-menu
-                >
-                  {isMobileMenuOpen ? (
-                    <X className="w-6 h-6 hover:text-[#F7DD0F] transition-colors animate-scale-in" />
-                  ) : (
-                    <Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
-                  )}
-                </button>
-              </ClientOnly>
             </div>
           </nav>
 
@@ -976,6 +999,32 @@ export default function DopeTechEcommerce() {
               </div>
               
               <div className="space-y-2">
+                {/* Home Button */}
+                <button
+                  onClick={() => {
+                    handleCategoryClick('all')
+                    setIsMobileMenuOpen(false)
+                  }}
+                  className={`w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl transition-all duration-200 ${
+                    selectedCategory === 'all'
+                      ? "bg-[#F7DD0F] text-black shadow-lg"
+                      : "text-white bg-white/5 border border-white/20 hover:bg-white/10 shadow-lg"
+                  }`}
+                  style={{ minHeight: '48px', minWidth: '44px' }}
+                >
+                  {/* Home Icon */}
+                  <div className={`flex-shrink-0 ${
+                    selectedCategory === 'all' ? "text-black" : "text-[#F7DD0F]"
+                  }`}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                    </svg>
+                  </div>
+                  
+                  {/* Home Text */}
+                  <span className="font-medium text-sm">Home</span>
+                </button>
+
                 {categories.map((category) => (
                   <button
                     key={category.id}
@@ -1403,13 +1452,10 @@ export default function DopeTechEcommerce() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-              <a href="#" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
-                Privacy Policy
+              <a href="/terms" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
+                Terms & Conditions
               </a>
-              <a href="#" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
-                Terms of Use
-              </a>
-              <a href="#" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
+              <a href="/support" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
                 Support
               </a>
             </div>

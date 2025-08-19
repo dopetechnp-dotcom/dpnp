@@ -39,6 +39,7 @@ export function EnhancedFooter() {
       { name: 'Cables', href: '#cables' },
     ],
     support: [
+      { name: 'Support', href: '/support' },
       { name: 'Contact Us', href: '#contact' },
       { name: 'FAQ', href: '#faq' },
       { name: 'Shipping Info', href: '#shipping' },
@@ -295,12 +296,8 @@ export function EnhancedFooter() {
             </div>
             
             <div className="flex items-center space-x-3 sm:space-x-4 text-xs">
-              <a href="#privacy" className="hover:text-primary transition-colors duration-200">
-                Privacy Policy
-              </a>
-              <span>•</span>
-              <a href="#terms" className="hover:text-primary transition-colors duration-200">
-                Terms of Service
+              <a href="/terms" className="hover:text-primary transition-colors duration-200">
+                Terms & Conditions
               </a>
               <span>•</span>
               <a href="#cookies" className="hover:text-primary transition-colors duration-200">

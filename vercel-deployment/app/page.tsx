@@ -843,8 +843,26 @@ export default function DopeTechEcommerce() {
       <header className="fixed top-0 left-0 right-0 z-50 dopetech-nav animate-fade-in-down">
         <div className="container-max py-4">
           <nav className="flex items-center justify-between h-auto min-h-20">
-            {/* Left Side - Logo */}
-            <div className="flex items-center space-x-3 min-w-0 flex-1 pt-1">
+            {/* Left Side - Mobile Menu Toggle (mobile only) */}
+            <div className="flex items-center md:hidden pt-1">
+              <ClientOnly fallback={<button className="p-2 touch-target flex items-center justify-center" aria-label="Menu"><Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" /></button>}>
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="p-2 touch-target flex items-center justify-center"
+                  aria-label="Menu"
+                  data-mobile-menu
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="w-6 h-6 hover:text-[#F7DD0F] transition-colors animate-scale-in" />
+                  ) : (
+                    <Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
+                  )}
+                </button>
+              </ClientOnly>
+            </div>
+
+            {/* Center - Logo and Tagline */}
+            <div className="flex items-center justify-center space-x-3 min-w-0 flex-1 pt-1">
               <img 
                 src={logoLoading ? "/logo/simple-logo.svg" : logoUrl} 
                 alt="DopeTech" 
@@ -902,21 +920,23 @@ export default function DopeTechEcommerce() {
                 <Instagram className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
               </a>
 
-              {/* Mobile Menu Toggle */}
-              <ClientOnly fallback={<button className="md:hidden p-2 touch-target flex items-center justify-center" aria-label="Menu"><Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" /></button>}>
-                <button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="md:hidden p-2 touch-target flex items-center justify-center"
-                  aria-label="Menu"
-                  data-mobile-menu
-                >
-                  {isMobileMenuOpen ? (
-                    <X className="w-6 h-6 hover:text-[#F7DD0F] transition-colors animate-scale-in" />
-                  ) : (
-                    <Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
-                  )}
-                </button>
-              </ClientOnly>
+              {/* Desktop Menu Toggle (hidden on mobile) */}
+              <div className="hidden md:block">
+                <ClientOnly fallback={<button className="p-2 touch-target flex items-center justify-center" aria-label="Menu"><Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" /></button>}>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="p-2 touch-target flex items-center justify-center"
+                    aria-label="Menu"
+                    data-mobile-menu
+                  >
+                    {isMobileMenuOpen ? (
+                      <X className="w-6 h-6 hover:text-[#F7DD0F] transition-colors animate-scale-in" />
+                    ) : (
+                      <Menu className="w-6 h-6 hover:text-[#F7DD0F] transition-colors" />
+                    )}
+                  </button>
+                </ClientOnly>
+              </div>
             </div>
           </nav>
 
@@ -1387,13 +1407,10 @@ export default function DopeTechEcommerce() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-              <a href="#" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
-                Privacy Policy
+              <a href="/terms" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
+                Terms & Conditions
               </a>
-              <a href="#" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
-                Terms of Use
-              </a>
-              <a href="#" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
+              <a href="/support" className="text-xs sm:text-sm md:text-base text-gray-400 hover:text-[#F7DD0F] transition-colors cursor-hover jakarta-light font-medium">
                 Support
               </a>
             </div>
